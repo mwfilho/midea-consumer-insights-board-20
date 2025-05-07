@@ -57,7 +57,7 @@ const BrazilMap: React.FC<BrazilMapProps> = ({ processosMap }) => {
   const [tooltipContent, setTooltipContent] = useState("");
   
   return (
-    <div className="relative w-full h-[400px]">
+    <div className="relative w-full h-full" style={{ minHeight: "400px" }}>
       <ComposableMap
         projection="geoMercator"
         projectionConfig={{
@@ -95,6 +95,12 @@ const BrazilMap: React.FC<BrazilMapProps> = ({ processosMap }) => {
                       strokeWidth: 0.75,
                       outline: "none",
                     },
+                    pressed: {
+                      fill: "#3182CE",
+                      stroke: "#FFFFFF",
+                      strokeWidth: 0.75,
+                      outline: "none",
+                    }
                   }}
                 />
               );
