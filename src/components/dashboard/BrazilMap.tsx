@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import { Tooltip } from "react-tooltip";
 
@@ -54,15 +54,17 @@ interface BrazilMapProps {
 }
 
 const BrazilMap: React.FC<BrazilMapProps> = ({ processosMap }) => {
+  const [tooltipContent, setTooltipContent] = useState("");
+  
   return (
-    <div className="relative w-full">
+    <div className="relative w-full h-[400px]">
       <ComposableMap
         projection="geoMercator"
         projectionConfig={{
           scale: 750,
           center: [-55, -15]
         }}
-        style={{ width: "100%", height: "400px" }}
+        style={{ width: "100%", height: "100%" }}
       >
         <Geographies geography={BRAZIL_GEO_URL}>
           {({ geographies }) =>
@@ -77,6 +79,9 @@ const BrazilMap: React.FC<BrazilMapProps> = ({ processosMap }) => {
                   geography={geo}
                   data-tooltip-id="state-tooltip"
                   data-tooltip-content={`${stateName}: ${processos} processos`}
+                  onMouseEnter={() => {
+                    setTooltipContent(`${stateName}: ${processos} processos`);
+                  }}
                   style={{
                     default: {
                       fill: getStateColor(stateCode, processosMap),
@@ -98,6 +103,35 @@ const BrazilMap: React.FC<BrazilMapProps> = ({ processosMap }) => {
         </Geographies>
       </ComposableMap>
       <Tooltip id="state-tooltip" />
+      
+      {/* Map legend */}
+      <div className="absolute bottom-2 right-2 bg-white p-2 rounded-md shadow-md text-xs">
+        <div className="font-bold mb-1">Processos por Estado</div>
+        <div className="flex items-center gap-1">
+          <div className="w-3 h-3 bg-[#F1F0FB]"></div>
+          <span>0</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <div className="w-3 h-3 bg-[#D3E4FD]"></div>
+          <span>1-9</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <div className="w-3 h-3 bg-[#9F9EA1]"></div>
+          <span>10-19</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <div className="w-3 h-3 bg-[#6E59A5]"></div>
+          <span>20-29</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <div className="w-3 h-3 bg-[#403E43]"></div>
+          <span>30-39</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <div className="w-3 h-3 bg-[#1A1F2C]"></div>
+          <span>40+</span>
+        </div>
+      </div>
     </div>
   );
 };
