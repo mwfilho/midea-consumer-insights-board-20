@@ -12,8 +12,8 @@ interface ValorMedioProdutosChartProps {
 }
 
 const ValorMedioProdutosChart: React.FC<ValorMedioProdutosChartProps> = ({ data }) => {
-  // Cores vibrantes diferentes do azul do dashboard
-  const COLORS = ['#8B5CF6', '#D946EF', '#F97316', '#10B981', '#FB923C'];
+  // Tons de azul (blue-500 a blue-900)
+  const COLORS = ['#3b82f6', '#2563eb', '#1d4ed8', '#1e40af', '#1e3a8a'];
 
   return (
     <div className="h-[300px]">
@@ -47,7 +47,7 @@ const ValorMedioProdutosChart: React.FC<ValorMedioProdutosChartProps> = ({ data 
             dataKey="valor" 
             radius={[0, 6, 6, 0]} 
             animationDuration={1500}
-            fill="#8B5CF6"
+            fill="#3b82f6"
           >
             {data.map((entry, index) => (
               <Cell 

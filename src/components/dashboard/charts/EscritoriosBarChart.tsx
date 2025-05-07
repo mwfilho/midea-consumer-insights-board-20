@@ -14,8 +14,8 @@ interface EscritoriosBarChartProps {
 }
 
 const EscritoriosBarChart: React.FC<EscritoriosBarChartProps> = ({ data, config }) => {
-  // Cores vibrantes diferentes do azul do dashboard
-  const COLORS = ['#8B5CF6', '#D946EF', '#F97316', '#10B981', '#FB923C'];
+  // Tons de azul (blue-500 a blue-900)
+  const COLORS = ['#3b82f6', '#2563eb', '#1d4ed8', '#1e40af', '#1e3a8a'];
 
   return (
     <div className="h-[300px]">
@@ -41,7 +41,7 @@ const EscritoriosBarChart: React.FC<EscritoriosBarChartProps> = ({ data, config 
             dataKey="processos" 
             name="Processos" 
             radius={[6, 6, 0, 0]} 
-            fill="#8B5CF6"
+            fill="#3b82f6"
             animationBegin={0}
             animationDuration={1500}
             className="hover:opacity-80"

@@ -26,13 +26,13 @@ const Index = () => {
     { name: 'Reativados', value: statusProcessos.reativado },
   ];
 
-  // Configuração para o ChartContainer com cores vibrantes
+  // Configuração para o ChartContainer com tons de azul
   const chartConfig = {
-    ativos: { label: 'Ativos', theme: { light: '#8B5CF6', dark: '#A78BFA' } },
-    encerrados: { label: 'Encerrados', theme: { light: '#D946EF', dark: '#E879F9' } },
-    reativados: { label: 'Reativados', theme: { light: '#F97316', dark: '#FB923C' } },
-    primaryLine: { theme: { light: '#8B5CF6', dark: '#A78BFA' } },
-    secondaryLine: { theme: { light: '#F97316', dark: '#FB923C' } },
+    ativos: { label: 'Ativos', theme: { light: '#3b82f6', dark: '#60a5fa' } },
+    encerrados: { label: 'Encerrados', theme: { light: '#2563eb', dark: '#3b82f6' } },
+    reativados: { label: 'Reativados', theme: { light: '#1d4ed8', dark: '#2563eb' } },
+    primaryLine: { theme: { light: '#3b82f6', dark: '#60a5fa' } },
+    secondaryLine: { theme: { light: '#1d4ed8', dark: '#2563eb' } },
   };
 
   const insights = [

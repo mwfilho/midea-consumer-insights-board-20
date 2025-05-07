@@ -12,8 +12,8 @@ interface StatusPieChartProps {
 }
 
 const StatusPieChart: React.FC<StatusPieChartProps> = ({ data }) => {
-  // Cores vibrantes diferentes do azul do dashboard
-  const COLORS_STATUS = ['#8B5CF6', '#D946EF', '#F97316'];
+  // Paleta de tons de azul
+  const COLORS_STATUS = ['#3b82f6', '#2563eb', '#1d4ed8'];
   
   return (
     <div className="h-[300px]">
@@ -26,7 +26,7 @@ const StatusPieChart: React.FC<StatusPieChartProps> = ({ data }) => {
             labelLine
             outerRadius={120}
             innerRadius={60}
-            fill="#8884d8"
+            fill="#3b82f6"
             dataKey="value"
             label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
             paddingAngle={5}
