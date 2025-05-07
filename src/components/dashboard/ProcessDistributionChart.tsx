@@ -30,10 +30,12 @@ const ProcessDistributionChart: React.FC<ProcessDistributionChartProps> = ({ dat
           height={70}
           tick={{ fontSize: 12 }}
           tickLine={false}
+          axisLine={{ stroke: '#e0e0e0' }}
         />
         <YAxis 
           tickLine={false}
           axisLine={{ stroke: '#e0e0e0' }}
+          tick={{ fontSize: 12 }}
         />
         <Tooltip 
           formatter={(value, name) => [`${value} processos`, 'Quantidade']}
@@ -43,6 +45,7 @@ const ProcessDistributionChart: React.FC<ProcessDistributionChartProps> = ({ dat
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
             border: 'none'
           }}
+          cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }}
         />
         <Bar 
           dataKey="processos" 

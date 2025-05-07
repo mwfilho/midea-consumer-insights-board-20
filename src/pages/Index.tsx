@@ -6,17 +6,19 @@ import {
   LayoutDashboard,
   Gavel
 } from 'lucide-react';
-import { PieChart, Pie, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { PieChart, Pie, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, RadialBar } from 'recharts';
 
 import DashboardLayout from '@/components/DashboardLayout';
 import StatCard from '@/components/dashboard/StatCard';
 import ChartCard from '@/components/dashboard/ChartCard';
-import InsightsList from '@/components/dashboard/InsightsList';
+import ProcessDistributionChart from '@/components/dashboard/ProcessDistributionChart';
 import { 
   statusProcessos,
   escritoriosResponsaveis,
-  processosPorEstado
+  processosPorEstado,
+  valorMedioProdutos
 } from '@/data/dashboardData';
+import { ChartContainer, ChartTooltipContent, ChartTooltip } from '@/components/ui/chart';
 
 const Index = () => {
   // Transformar dados para o gráfico de pizza
@@ -26,12 +28,23 @@ const Index = () => {
     { name: 'Reativados', value: statusProcessos.reativado },
   ];
 
-  const COLORS = ['#0056a9', '#4a8fd1', '#b8d1ea'];
+  // Cores mais vibrantes e modernas para os gráficos
+  const COLORS = ['#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+  const COLORS_STATUS = ['#0ea5e9', '#10b981', '#f59e0b'];
+
+  // Configuração para o ChartContainer
+  const chartConfig = {
+    ativos: { label: 'Ativos', theme: { light: '#0ea5e9', dark: '#38bdf8' } },
+    encerrados: { label: 'Encerrados', theme: { light: '#10b981', dark: '#34d399' } },
+    reativados: { label: 'Reativados', theme: { light: '#f59e0b', dark: '#fbbf24' } },
+    primaryLine: { theme: { light: '#0ea5e9', dark: '#38bdf8' } },
+    secondaryLine: { theme: { light: '#f59e0b', dark: '#fbbf24' } },
+  };
 
   return (
     <DashboardLayout title="Resumo Executivo">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-midea-blue mb-2">
+        <h2 className="text-2xl font-bold text-sky-500 mb-2">
           Principais Indicadores - Abril/2025
         </h2>
         <p className="text-gray-600">Análise da carteira de processos do contencioso consumidor</p>
@@ -42,65 +55,170 @@ const Index = () => {
         <StatCard 
           title="Total de Processos"
           value="200+"
-          icon={<Gavel size={32} className="text-midea-blue" />}
+          icon={<Gavel size={32} className="text-sky-500" />}
           description="Processos ativos e encerrados"
         />
         <StatCard 
           title="Total de Pagamentos"
           value="R$ 350mil+"
-          icon={<BarChartIcon size={32} className="text-midea-blue" />}
+          icon={<BarChartIcon size={32} className="text-sky-500" />}
           description="Acordos e condenações"
         />
         <StatCard 
           title="Média Danos Morais"
           value="R$ 3.000"
-          icon={<LayoutDashboard size={32} className="text-midea-blue" />}
+          icon={<LayoutDashboard size={32} className="text-sky-500" />}
           description="Valor por processo"
         />
         <StatCard 
           title="Média Danos Materiais"
           value="R$ 4.000"
-          icon={<Calendar size={32} className="text-midea-blue" />}
+          icon={<Calendar size={32} className="text-sky-500" />}
           description="Valor por processo"
         />
       </div>
 
       {/* Gráficos */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <ChartCard title="Status dos Processos">
-          <div className="h-64">
+        <ChartCard title="Status dos Processos" contentClassName="pt-3">
+          <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={statusData}
                   cx="50%"
                   cy="50%"
-                  labelLine={false}
-                  outerRadius={80}
+                  labelLine
+                  outerRadius={120}
+                  innerRadius={60}
                   fill="#8884d8"
                   dataKey="value"
                   label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  paddingAngle={5}
                 >
                   {statusData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell 
+                      key={`cell-${index}`} 
+                      fill={COLORS_STATUS[index % COLORS_STATUS.length]}
+                      style={{
+                        filter: 'drop-shadow(0px 3px 5px rgba(0,0,0,0.15))'
+                      }}
+                    />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value) => `${value}%`} />
-                <Legend />
+                <Tooltip 
+                  formatter={(value, name) => [`${value}%`, name]}
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                    border: 'none'
+                  }}
+                />
+                <Legend 
+                  verticalAlign="bottom" 
+                  align="center"
+                  layout="horizontal"
+                  iconType="circle"
+                  wrapperStyle={{
+                    paddingTop: '20px'
+                  }}
+                />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </ChartCard>
 
-        <ChartCard title="Escritórios Responsáveis">
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
+        <ChartCard title="Escritórios Responsáveis" contentClassName="pt-3">
+          <div className="h-[300px]">
+            <ChartContainer 
+              config={chartConfig}
+              className="w-full h-full"
+            >
               <BarChart data={escritoriosResponsaveis}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="escritorio" />
-                <YAxis />
-                <Tooltip formatter={(value) => `${value} processos`} />
-                <Bar dataKey="processos" fill="#0056a9" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e0e0e0" />
+                <XAxis 
+                  dataKey="escritorio" 
+                  tick={{ fill: '#666', fontSize: 12 }}
+                  axisLine={{ stroke: '#e0e0e0' }}
+                  tickLine={false}
+                />
+                <YAxis 
+                  tick={{ fill: '#666', fontSize: 12 }}
+                  axisLine={{ stroke: '#e0e0e0' }}
+                  tickLine={false}
+                />
+                <Tooltip content={<ChartTooltipContent />} />
+                <Bar 
+                  dataKey="processos" 
+                  name="Processos" 
+                  radius={[6, 6, 0, 0]} 
+                  fill="#0ea5e9"
+                  animationBegin={0}
+                  animationDuration={1500}
+                  className="hover:opacity-80"
+                >
+                  {escritoriosResponsaveis.map((entry, index) => (
+                    <Cell 
+                      key={`cell-${index}`} 
+                      fill={COLORS[index % COLORS.length]} 
+                      style={{
+                        filter: 'drop-shadow(0px 3px 5px rgba(0,0,0,0.15))'
+                      }}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ChartContainer>
+          </div>
+        </ChartCard>
+      </div>
+      
+      {/* Valor Médio por Produto */}
+      <div className="grid grid-cols-1 mb-8">
+        <ChartCard title="Valor Médio por Produto (R$)" contentClassName="pt-3">
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={valorMedioProdutos} layout="vertical">
+                <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#e0e0e0" />
+                <XAxis 
+                  type="number" 
+                  tick={{ fill: '#666', fontSize: 12 }}
+                  axisLine={{ stroke: '#e0e0e0' }}
+                  tickLine={false}
+                />
+                <YAxis 
+                  dataKey="produto" 
+                  type="category" 
+                  tick={{ fill: '#666', fontSize: 12 }}
+                  axisLine={{ stroke: '#e0e0e0' }}
+                  tickLine={false}
+                  width={100}
+                />
+                <Tooltip 
+                  formatter={(value) => [`R$ ${value}`, 'Valor Médio']}
+                  contentStyle={{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                    border: 'none'
+                  }}
+                />
+                <Bar 
+                  dataKey="valor" 
+                  radius={[0, 6, 6, 0]} 
+                  animationDuration={1500}
+                >
+                  {valorMedioProdutos.map((entry, index) => (
+                    <Cell 
+                      key={`cell-${index}`} 
+                      fill={COLORS[index % COLORS.length]} 
+                      style={{
+                        filter: 'drop-shadow(0px 3px 5px rgba(0,0,0,0.15))'
+                      }}
+                    />
+                  ))}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -109,26 +227,15 @@ const Index = () => {
 
       {/* Lista de estados com mais processos */}
       <div className="mb-8">
-        <h3 className="text-xl font-bold text-midea-blue mb-4">Principais Estados</h3>
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <div className="grid grid-cols-3 font-bold border-b pb-2 mb-2">
-            <div>Estado</div>
-            <div className="text-center">Processos</div>
-            <div className="text-center">Percentual</div>
-          </div>
-          {processosPorEstado.slice(0, 5).map((estado, index) => (
-            <div key={index} className="grid grid-cols-3 py-2 border-b">
-              <div>{estado.estado}</div>
-              <div className="text-center">{estado.processos}</div>
-              <div className="text-center">{estado.percentual}</div>
-            </div>
-          ))}
-        </div>
+        <h3 className="text-xl font-bold text-sky-500 mb-4">Principais Estados</h3>
+        <ChartCard title="Distribuição de Processos por Estado">
+          <ProcessDistributionChart data={processosPorEstado.slice(0, 5)} />
+        </ChartCard>
       </div>
 
       {/* Insights */}
       <div className="mb-8">
-        <h3 className="text-xl font-bold text-midea-blue mb-4">Insights</h3>
+        <h3 className="text-xl font-bold text-sky-500 mb-4">Insights</h3>
         <div className="bg-white p-4 rounded-lg shadow-md">
           <ul className="list-disc pl-5 space-y-2">
             <li>Maior concentração nas regiões Sudeste e Nordeste</li>
