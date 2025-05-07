@@ -6,15 +6,21 @@ interface ChartCardProps {
   title: string;
   children: ReactNode;
   className?: string;
+  contentClassName?: string;
 }
 
-const ChartCard: React.FC<ChartCardProps> = ({ title, children, className = "" }) => {
+const ChartCard: React.FC<ChartCardProps> = ({ 
+  title, 
+  children, 
+  className = "",
+  contentClassName = "" 
+}) => {
   return (
     <Card className={`shadow-md ${className}`}>
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-bold text-midea-blue">{title}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className={contentClassName}>
         {children}
       </CardContent>
     </Card>
