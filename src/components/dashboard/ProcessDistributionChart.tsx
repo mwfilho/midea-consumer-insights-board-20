@@ -12,8 +12,8 @@ interface ProcessDistributionChartProps {
 }
 
 const ProcessDistributionChart: React.FC<ProcessDistributionChartProps> = ({ data }) => {
-  // Cores mais vibrantes para os gráficos
-  const COLORS = ['#4a8fd1', '#35a853', '#fbbc05', '#e63d2f', '#9747ff', '#00bcd4'];
+  // Cores mais vibrantes e modernas para os gráficos
+  const COLORS = ['#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
   
   return (
     <ResponsiveContainer width="100%" height={300}>
@@ -38,7 +38,7 @@ const ProcessDistributionChart: React.FC<ProcessDistributionChartProps> = ({ dat
         <Tooltip 
           formatter={(value, name) => [`${value} processos`, 'Quantidade']}
           contentStyle={{ 
-            backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+            backgroundColor: 'rgba(255, 255, 255, 0.95)', 
             borderRadius: '8px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
             border: 'none'
@@ -47,7 +47,7 @@ const ProcessDistributionChart: React.FC<ProcessDistributionChartProps> = ({ dat
         <Bar 
           dataKey="processos" 
           name="Processos" 
-          radius={[4, 4, 0, 0]}
+          radius={[6, 6, 0, 0]}
           animationDuration={1500}
         >
           {data.map((entry, index) => (
@@ -55,7 +55,7 @@ const ProcessDistributionChart: React.FC<ProcessDistributionChartProps> = ({ dat
               key={`cell-${index}`} 
               fill={COLORS[index % COLORS.length]} 
               style={{
-                filter: 'drop-shadow(0px 2px 3px rgba(0,0,0,0.1))'
+                filter: 'drop-shadow(0px 3px 5px rgba(0,0,0,0.15))'
               }}
             />
           ))}

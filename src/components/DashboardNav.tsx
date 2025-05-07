@@ -55,8 +55,8 @@ const DashboardNav = () => {
           to={item.path}
           className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
             isActive(item.path)
-              ? 'bg-midea-blue text-white shadow-md'
-              : 'bg-white hover:bg-blue-50'
+              ? 'bg-sky-500 text-white shadow-md'
+              : 'bg-white hover:bg-sky-50'
           }`}
         >
           {item.icon}

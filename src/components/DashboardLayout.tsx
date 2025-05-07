@@ -1,3 +1,4 @@
+
 import React, { ReactNode } from 'react';
 import { Calendar } from 'lucide-react';
 import DashboardNav from './DashboardNav';
@@ -21,9 +22,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       {/* Main Content */}
       <main className="flex-grow p-6 bg-gray-50">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-midea-blue">{title}</h2>
+          <h2 className="text-2xl font-bold text-sky-500">{title}</h2>
           <div className="flex items-center text-gray-500">
-            <Calendar className="mr-2 h-5 w-5 text-midea-blue" />
+            <Calendar className="mr-2 h-5 w-5 text-sky-500" />
             <span>{currentDate}</span>
           </div>
         </div>
@@ -36,7 +37,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       </main>
 
       {/* Footer */}
-      <footer className="midea-bg-blue p-3 text-center text-white text-sm shadow-inner">
+      <footer className="bg-sky-500 p-3 text-center text-white text-sm shadow-inner">
         Dashboard Contencioso Consumidor - Midea © {new Date().getFullYear()}
       </footer>
     </div>;

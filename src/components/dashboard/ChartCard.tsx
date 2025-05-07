@@ -18,8 +18,8 @@ const ChartCard: React.FC<ChartCardProps> = ({
   return (
     <Card className={`shadow-md hover:shadow-lg transition-shadow duration-300 ${className}`}>
       <CardHeader className="pb-2 border-b border-gray-100">
-        <CardTitle className="text-lg font-bold text-midea-blue flex items-center">
-          <span className="w-1.5 h-4 bg-midea-blue mr-2 rounded-sm"></span>
+        <CardTitle className="text-lg font-bold text-sky-500 flex items-center">
+          <span className="w-1.5 h-4 bg-sky-500 mr-2 rounded-sm"></span>
           {title}
         </CardTitle>
       </CardHeader>

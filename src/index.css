@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -95,7 +94,7 @@
 }
 
 .midea-bg-blue {
-  background-color: #4a8fd1; /* Atualizado para azul mais claro */
+  background-color: #0ea5e9; /* Updated to sky-500 */
 }
 
 .midea-text-white {
@@ -103,23 +102,23 @@
 }
 
 .midea-gradient {
-  background: linear-gradient(to right, #78b0e6, #b8d1ea); /* Gradiente mais suave */
+  background: linear-gradient(to right, #38bdf8, #bae6fd); /* Updated to sky-400 to sky-200 */
 }
 
 .status-active {
-  background-color: #4a8fd1; /* Azul mais claro */
+  background-color: #0ea5e9; /* Updated to sky-500 */
 }
 
 .status-closed {
-  background-color: #78b0e6; /* Azul ainda mais claro */
+  background-color: #38bdf8; /* Updated to sky-400 */
 }
 
 .status-reactivated {
-  background-color: #b8d1ea; /* Azul bem claro */
+  background-color: #bae6fd; /* Updated to sky-200 */
 }
 
 .region-southeast {
-  background-color: #4a8fd1;
+  background-color: #0ea5e9;
   color: white;
 }
 
