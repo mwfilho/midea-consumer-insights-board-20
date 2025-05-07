@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { processosPorEstado } from '@/data/dashboardData';
 
 export interface ProcessoEstadoData {
@@ -49,6 +50,7 @@ export const getInsights = () => [
   }
 ];
 
+// The issue was in this section - we need to properly handle JSX in TypeScript
 export const getTableColumns = () => [
   { key: 'estado', header: 'Estado' },
   { key: 'processos', header: 'Processos', className: 'text-center' },
@@ -56,16 +58,18 @@ export const getTableColumns = () => [
     key: 'percentual', 
     header: 'Percentual', 
     className: 'text-center',
-    render: (value: string) => (
-      <div>
-        <span>{value}</span>
-        <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-          <div
-            className="h-2.5 rounded-full bg-midea-blue"
-            style={{ width: value }}
-          ></div>
+    render: (value: string) => {
+      return (
+        <div>
+          <span>{value}</span>
+          <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+            <div
+              className="h-2.5 rounded-full bg-midea-blue"
+              style={{ width: value }}
+            />
+          </div>
         </div>
-      </div>
-    )
+      );
+    }
   },
 ];
