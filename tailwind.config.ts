@@ -64,8 +64,8 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				midea: {
-					blue: '#0056a9',
-					lightBlue: '#4a8fd1',
+					blue: '#4a8fd1', // Atualizado para um azul mais claro
+					lightBlue: '#78b0e6', // Azul ainda mais claro
 					skyBlue: '#b8d1ea',
 					red: '#e63d2f',
 					green: '#35a853',

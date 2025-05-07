@@ -95,7 +95,7 @@
 }
 
 .midea-bg-blue {
-  background-color: #0056a9;
+  background-color: #4a8fd1; /* Atualizado para azul mais claro */
 }
 
 .midea-text-white {
@@ -103,23 +103,23 @@
 }
 
 .midea-gradient {
-  background: linear-gradient(to right, #0056a9, #4a8fd1);
+  background: linear-gradient(to right, #78b0e6, #b8d1ea); /* Gradiente mais suave */
 }
 
 .status-active {
-  background-color: #0056a9;
+  background-color: #4a8fd1; /* Azul mais claro */
 }
 
 .status-closed {
-  background-color: #4a8fd1;
+  background-color: #78b0e6; /* Azul ainda mais claro */
 }
 
 .status-reactivated {
-  background-color: #b8d1ea;
+  background-color: #b8d1ea; /* Azul bem claro */
 }
 
 .region-southeast {
-  background-color: #0056a9;
+  background-color: #4a8fd1;
   color: white;
 }
 
@@ -145,4 +145,35 @@
 
 .insight-icon {
   @apply inline-block mr-2;
+}
+
+/* Novas classes para gráficos modernos */
+.chart-container {
+  @apply transition-all duration-300 ease-in-out hover:shadow-lg;
+}
+
+.chart-gradient-bg {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4ecfb 100%);
+  @apply rounded-lg p-4;
+}
+
+.chart-header {
+  @apply text-midea-blue font-bold text-lg mb-3 flex items-center;
+}
+
+/* Novas cores para os gráficos */
+.chart-color-set-1 {
+  --chart-color-1: #4a8fd1;
+  --chart-color-2: #35a853;
+  --chart-color-3: #fbbc05;
+  --chart-color-4: #e63d2f;
+  --chart-color-5: #9747ff;
+}
+
+.chart-color-set-2 {
+  --chart-color-1: #78b0e6;
+  --chart-color-2: #5bca7a;
+  --chart-color-3: #ffd04c;
+  --chart-color-4: #ff7a72;
+  --chart-color-5: #c094ff;
 }

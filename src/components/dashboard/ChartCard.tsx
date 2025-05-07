@@ -16,11 +16,14 @@ const ChartCard: React.FC<ChartCardProps> = ({
   contentClassName = "" 
 }) => {
   return (
-    <Card className={`shadow-md ${className}`}>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg font-bold text-midea-blue">{title}</CardTitle>
+    <Card className={`shadow-md hover:shadow-lg transition-shadow duration-300 ${className}`}>
+      <CardHeader className="pb-2 border-b border-gray-100">
+        <CardTitle className="text-lg font-bold text-midea-blue flex items-center">
+          <span className="w-1.5 h-4 bg-midea-blue mr-2 rounded-sm"></span>
+          {title}
+        </CardTitle>
       </CardHeader>
-      <CardContent className={contentClassName}>
+      <CardContent className={`pt-4 ${contentClassName}`}>
         {children}
       </CardContent>
     </Card>

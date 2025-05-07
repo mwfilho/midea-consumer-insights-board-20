@@ -35,7 +35,7 @@ const GeographicAnalysis = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <ChartCard 
           title="Mapa de Processos por Estado" 
-          className="h-full min-h-[500px]"
+          className="h-full min-h-[500px] bg-gradient-to-br from-white to-blue-50"
           contentClassName="flex items-center justify-center h-full"
         >
           {isLoaded && <BrazilMap processosMap={processosMap} />}
@@ -45,17 +45,21 @@ const GeographicAnalysis = () => {
           title="Processos por Estado"
           columns={columns}
           data={processosPorEstado}
-          className="h-full"
+          className="h-full bg-white"
         />
       </div>
 
-      <ChartCard title="Distribuição de Processos por Estado (Top 6)" className="mb-8">
+      <ChartCard 
+        title="Distribuição de Processos por Estado (Top 6)" 
+        className="mb-8 bg-gradient-to-br from-white to-blue-50"
+      >
         <ProcessDistributionChart data={barChartData} />
       </ChartCard>
 
       <InsightsList 
         title="Insights"
         insights={insights}
+        className="bg-gradient-to-br from-white to-blue-50 border-t-4 border-midea-blue"
       />
     </DashboardLayout>
   );
