@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { processosPorEstado } from '@/data/dashboardData';
+import { processosPorEstado as processosPorEstadoData } from '@/data/dashboardData';
 
 export interface ProcessoEstadoData {
   estado: string;
@@ -12,6 +12,9 @@ export interface ProcessoChartData {
   estado: string;
   processos: number;
 }
+
+// Re-export the processosPorEstado from dashboardData
+export const processosPorEstado = processosPorEstadoData;
 
 export const getProcessosByState = (): Record<string, number> => {
   const stateMap: Record<string, number> = {};
