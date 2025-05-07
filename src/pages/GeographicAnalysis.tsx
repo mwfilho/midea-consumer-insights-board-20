@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
 import ChartCard from '@/components/dashboard/ChartCard';
 import DataTable from '@/components/dashboard/DataTable';
@@ -15,10 +15,21 @@ import {
 } from '@/utils/processData';
 
 const GeographicAnalysis = () => {
+  const [isMapReady, setIsMapReady] = useState(false);
   const processosMap = getProcessosByState();
   const columns = getTableColumns();
   const barChartData = getChartData();
   const insights = getInsights();
+  const mapRef = useRef(null);
+
+  // Ensure map renders after component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsMapReady(true);
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <DashboardLayout title="Distribuição Geográfica dos Processos">
@@ -28,7 +39,9 @@ const GeographicAnalysis = () => {
           className="h-full min-h-[500px] bg-gradient-to-br from-white to-blue-50"
           contentClassName="flex items-center justify-center h-full"
         >
-          <BrazilMap processosMap={processosMap} />
+          <div ref={mapRef} className="w-full h-full">
+            {isMapReady && <BrazilMap processosMap={processosMap} />}
+          </div>
         </ChartCard>
 
         <DataTable 
