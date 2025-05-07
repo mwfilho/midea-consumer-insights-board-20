@@ -57,18 +57,16 @@ export const getTableColumns = () => [
     key: 'percentual', 
     header: 'Percentual', 
     className: 'text-center',
-    render: (value: string) => {
-      return (
-        <div>
-          <span>{value}</span>
-          <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-            <div
-              className="h-2.5 rounded-full bg-midea-blue"
-              style={{ width: value }}
-            />
-          </div>
+    render: (value: string) => (
+      <div>
+        <span>{value}</span>
+        <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+          <div
+            className="h-2.5 rounded-full bg-midea-blue"
+            style={{ width: value }}
+          />
         </div>
-      );
-    }
+      </div>
+    )
   }
 ];
