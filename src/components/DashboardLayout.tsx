@@ -1,29 +1,21 @@
-
 import React, { ReactNode } from 'react';
 import { Calendar } from 'lucide-react';
 import DashboardNav from './DashboardNav';
-
 interface DashboardLayoutProps {
   children: ReactNode;
   title: string;
   currentDate?: string;
 }
-
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({ 
-  children, 
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({
+  children,
   title,
   currentDate = "Abril/2025"
 }) => {
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header className="midea-gradient p-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-white">Dashboard Contencioso Consumidor</h1>
-        <img 
-          src="/lovable-uploads/1ce3e3a7-a616-4f13-bd9c-c8e489444fff.png" 
-          alt="Midea Logo" 
-          className="h-10" 
-        />
+        <img alt="Midea Logo" className="h-10" src="/lovable-uploads/3431dd02-612a-43ec-9330-7bb548873d8d.png" />
       </header>
 
       {/* Main Content */}
@@ -45,8 +37,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       <footer className="midea-bg-blue p-3 text-center text-white text-sm">
         Dashboard Contencioso Consumidor - Midea © {new Date().getFullYear()}
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default DashboardLayout;
