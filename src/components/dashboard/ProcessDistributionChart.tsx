@@ -12,8 +12,8 @@ interface ProcessDistributionChartProps {
 }
 
 const ProcessDistributionChart: React.FC<ProcessDistributionChartProps> = ({ data }) => {
-  // Cores mais coesas para os gráficos - tons de azul e cinza
-  const COLORS = ['#0ea5e9', '#38bdf8', '#7dd3fc', '#bae6fd', '#e0f2fe', '#93c5fd'];
+  // Cores vibrantes diferentes do azul do dashboard
+  const COLORS = ['#8B5CF6', '#D946EF', '#F97316', '#10B981', '#FB923C', '#F43F5E'];
   
   return (
     <ResponsiveContainer width="100%" height={300}>

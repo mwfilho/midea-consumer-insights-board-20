@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   BarChart as BarChartIcon,
@@ -28,17 +27,17 @@ const Index = () => {
     { name: 'Reativados', value: statusProcessos.reativado },
   ];
 
-  // Cores mais coesas - tons de azul
-  const COLORS = ['#0ea5e9', '#38bdf8', '#7dd3fc', '#bae6fd', '#e0f2fe'];
-  const COLORS_STATUS = ['#0ea5e9', '#38bdf8', '#7dd3fc'];
+  // Cores vibrantes diferentes do azul do dashboard
+  const COLORS = ['#8B5CF6', '#D946EF', '#F97316', '#10B981', '#FB923C'];
+  const COLORS_STATUS = ['#8B5CF6', '#D946EF', '#F97316'];
 
-  // Configuração para o ChartContainer
+  // Configuração para o ChartContainer com cores vibrantes
   const chartConfig = {
-    ativos: { label: 'Ativos', theme: { light: '#0ea5e9', dark: '#38bdf8' } },
-    encerrados: { label: 'Encerrados', theme: { light: '#38bdf8', dark: '#7dd3fc' } },
-    reativados: { label: 'Reativados', theme: { light: '#7dd3fc', dark: '#bae6fd' } },
-    primaryLine: { theme: { light: '#0ea5e9', dark: '#38bdf8' } },
-    secondaryLine: { theme: { light: '#7dd3fc', dark: '#bae6fd' } },
+    ativos: { label: 'Ativos', theme: { light: '#8B5CF6', dark: '#A78BFA' } },
+    encerrados: { label: 'Encerrados', theme: { light: '#D946EF', dark: '#E879F9' } },
+    reativados: { label: 'Reativados', theme: { light: '#F97316', dark: '#FB923C' } },
+    primaryLine: { theme: { light: '#8B5CF6', dark: '#A78BFA' } },
+    secondaryLine: { theme: { light: '#F97316', dark: '#FB923C' } },
   };
 
   return (
@@ -153,7 +152,7 @@ const Index = () => {
                   dataKey="processos" 
                   name="Processos" 
                   radius={[6, 6, 0, 0]} 
-                  fill="#0ea5e9"
+                  fill="#8B5CF6"
                   animationBegin={0}
                   animationDuration={1500}
                   className="hover:opacity-80"
@@ -208,7 +207,7 @@ const Index = () => {
                   dataKey="valor" 
                   radius={[0, 6, 6, 0]} 
                   animationDuration={1500}
-                  fill="#0ea5e9"
+                  fill="#8B5CF6"
                 >
                   {valorMedioProdutos.map((entry, index) => (
                     <Cell 
