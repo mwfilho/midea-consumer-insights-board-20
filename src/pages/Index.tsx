@@ -28,17 +28,17 @@ const Index = () => {
     { name: 'Reativados', value: statusProcessos.reativado },
   ];
 
-  // Cores mais vibrantes e modernas para os gráficos
-  const COLORS = ['#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
-  const COLORS_STATUS = ['#0ea5e9', '#10b981', '#f59e0b'];
+  // Cores mais coesas - tons de azul
+  const COLORS = ['#0ea5e9', '#38bdf8', '#7dd3fc', '#bae6fd', '#e0f2fe'];
+  const COLORS_STATUS = ['#0ea5e9', '#38bdf8', '#7dd3fc'];
 
   // Configuração para o ChartContainer
   const chartConfig = {
     ativos: { label: 'Ativos', theme: { light: '#0ea5e9', dark: '#38bdf8' } },
-    encerrados: { label: 'Encerrados', theme: { light: '#10b981', dark: '#34d399' } },
-    reativados: { label: 'Reativados', theme: { light: '#f59e0b', dark: '#fbbf24' } },
+    encerrados: { label: 'Encerrados', theme: { light: '#38bdf8', dark: '#7dd3fc' } },
+    reativados: { label: 'Reativados', theme: { light: '#7dd3fc', dark: '#bae6fd' } },
     primaryLine: { theme: { light: '#0ea5e9', dark: '#38bdf8' } },
-    secondaryLine: { theme: { light: '#f59e0b', dark: '#fbbf24' } },
+    secondaryLine: { theme: { light: '#7dd3fc', dark: '#bae6fd' } },
   };
 
   return (
@@ -208,11 +208,12 @@ const Index = () => {
                   dataKey="valor" 
                   radius={[0, 6, 6, 0]} 
                   animationDuration={1500}
+                  fill="#0ea5e9"
                 >
                   {valorMedioProdutos.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={COLORS[index % COLORS.length]} 
+                      fill={COLORS[Math.min(index, COLORS.length - 1)]} 
                       style={{
                         filter: 'drop-shadow(0px 3px 5px rgba(0,0,0,0.15))'
                       }}
