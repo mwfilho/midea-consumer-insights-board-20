@@ -50,7 +50,6 @@ export const getInsights = () => [
   }
 ];
 
-// The issue was in this section - we need to properly handle JSX in TypeScript
 export const getTableColumns = () => [
   { key: 'estado', header: 'Estado' },
   { key: 'processos', header: 'Processos', className: 'text-center' },
@@ -71,5 +70,5 @@ export const getTableColumns = () => [
         </div>
       );
     }
-  },
+  }
 ];
