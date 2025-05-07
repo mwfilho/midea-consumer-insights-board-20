@@ -1,4 +1,3 @@
-
 import React, { ReactNode } from 'react';
 import { Calendar } from 'lucide-react';
 import DashboardNav from './DashboardNav';
@@ -14,7 +13,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 }) => {
   return <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="midea-gradient p-4 flex justify-between items-center shadow-md">
+      <header className="midea-gradient p-4 flex justify-between items-center shadow-md bg-sky-500">
         <h1 className="text-2xl font-bold text-white">Dashboard Contencioso Consumidor</h1>
         <img alt="Midea Logo" className="h-10" src="/lovable-uploads/3431dd02-612a-43ec-9330-7bb548873d8d.png" />
       </header>
