@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,19 +36,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -98,4 +92,57 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.midea-bg-blue {
+  background-color: #0056a9;
+}
+
+.midea-text-white {
+  color: #ffffff;
+}
+
+.midea-gradient {
+  background: linear-gradient(to right, #0056a9, #4a8fd1);
+}
+
+.status-active {
+  background-color: #0056a9;
+}
+
+.status-closed {
+  background-color: #4a8fd1;
+}
+
+.status-reactivated {
+  background-color: #b8d1ea;
+}
+
+.region-southeast {
+  background-color: #0056a9;
+  color: white;
+}
+
+.region-northeast {
+  background-color: #35a853;
+  color: white;
+}
+
+.region-south {
+  background-color: #9747ff;
+  color: white;
+}
+
+.region-north {
+  background-color: #e67e22;
+  color: white;
+}
+
+.region-central-west {
+  background-color: #e91e63;
+  color: white;
+}
+
+.insight-icon {
+  @apply inline-block mr-2;
 }

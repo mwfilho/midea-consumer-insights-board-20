@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				midea: {
+					blue: '#0056a9',
+					lightBlue: '#4a8fd1',
+					skyBlue: '#b8d1ea',
+					red: '#e63d2f',
+					green: '#35a853',
+					yellow: '#fbbc05',
 				}
 			},
 			borderRadius: {
