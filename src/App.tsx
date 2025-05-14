@@ -11,6 +11,7 @@ import FinancialAnalysis from "./pages/FinancialAnalysis";
 import RegionalAnalysis from "./pages/RegionalAnalysis";
 import Conclusions from "./pages/Conclusions";
 import NotFound from "./pages/NotFound";
+import VisaoGeral from "./pages/VisaoGeral";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/financeiro" element={<FinancialAnalysis />} />
           <Route path="/regional" element={<RegionalAnalysis />} />
           <Route path="/conclusoes" element={<Conclusions />} />
+          <Route path="/visao-geral" element={<VisaoGeral />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -8,6 +8,7 @@ import {
   DollarSign,
   Map,
   CheckSquare,
+  LayoutDashboard
 } from 'lucide-react';
 
 const DashboardNav = () => {
@@ -19,6 +20,11 @@ const DashboardNav = () => {
       path: '/',
       label: 'Resumo Executivo',
       icon: <BarChart2 className="w-5 h-5 mr-2" />,
+    },
+    {
+      path: '/visao-geral',
+      label: 'Visão Geral - Jurídico',
+      icon: <LayoutDashboard className="w-5 h-5 mr-2" />,
     },
     {
       path: '/geografia',
