@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import FilterBar from '@/components/dashboard/FilterBar';
+import PainelGeral from '@/components/juridico/PainelGeral';
 import PainelConsumidor from '@/components/juridico/PainelConsumidor';
 import PainelCivel from '@/components/juridico/PainelCivel';
 import PainelTrabalhista from '@/components/juridico/PainelTrabalhista';
@@ -26,14 +27,19 @@ const VisaoGeral = () => {
       <FilterBar onFilterChange={handleFilterChange} filters={filters} />
       
       <div className="mt-6">
-        <Tabs defaultValue="consumidor" className="w-full">
-          <TabsList className="grid grid-cols-5 mb-6">
+        <Tabs defaultValue="geral" className="w-full">
+          <TabsList className="grid grid-cols-6 mb-6">
+            <TabsTrigger value="geral">Geral</TabsTrigger>
             <TabsTrigger value="consumidor">Consumidor</TabsTrigger>
             <TabsTrigger value="civel">Cível</TabsTrigger>
             <TabsTrigger value="trabalhista">Trabalhista</TabsTrigger>
             <TabsTrigger value="tributario">Tributário</TabsTrigger>
             <TabsTrigger value="contratos">Contratos</TabsTrigger>
           </TabsList>
+          
+          <TabsContent value="geral" className="animate-fade-in">
+            <PainelGeral filters={filters} />
+          </TabsContent>
           
           <TabsContent value="consumidor" className="animate-fade-in">
             <PainelConsumidor filters={filters} />
