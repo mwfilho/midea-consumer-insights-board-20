@@ -19,6 +19,9 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ erro }) => {
         <div className="mt-2 text-sm">
           {erro.includes("404") && "O endpoint do proxy API não pôde ser encontrado. Verifique se a função serverless está implantada corretamente."}
           {erro.includes("500") && "Ocorreu um erro interno no servidor. A chave de API pode estar configurada incorretamente ou expirada."}
+          {erro.includes("401") && "Acesso não autorizado. A chave de API pode estar inválida ou expirada."}
+          {erro.includes("403") && "Acesso proibido. Verifique as permissões da chave de API."}
+          {erro.includes("variável") && "A variável de ambiente CNJ_API_KEY não está configurada no servidor."}
         </div>
       </AlertDescription>
     </Alert>

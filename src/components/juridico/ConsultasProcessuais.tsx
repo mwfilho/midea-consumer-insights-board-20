@@ -7,8 +7,9 @@ import SearchForm from './SearchForm';
 import ErrorDisplay from './ErrorDisplay';
 import ResultsDisplay from './ResultsDisplay';
 
-// URL base para o proxy API (substituir pela URL real após implantação)
-const API_PROXY_URL = "/api/cnj-proxy"; // Usando caminho relativo para o endpoint serverless
+// URL base para o proxy API
+// Usando o caminho que funciona em plataformas serverless como Vercel, Netlify e Lovable
+const API_PROXY_URL = "/api/cnj-proxy";
 
 const ConsultasProcessuais = () => {
   const [numeroProcesso, setNumeroProcesso] = useState('');
@@ -56,7 +57,7 @@ const ConsultasProcessuais = () => {
 
       console.log("Enviando consulta para o proxy API:", payload);
       
-      // Fazemos a chamada para o proxy API ao invés da API direta do CNJ
+      // Fazemos a chamada para o proxy API
       const response = await fetch(API_PROXY_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -1,6 +1,6 @@
 
-// Este é um exemplo de função serverless que pode ser implantada em plataformas como Vercel ou Netlify
-// Para usar, você precisará configurar a variável de ambiente CNJ_API_KEY no seu provedor serverless
+// Função serverless para proxy da API do CNJ
+// Compatível com plataformas como Vercel, Netlify e similares
 
 export default async function handler(req, res) {
   // Verifica se o método é POST
@@ -36,9 +36,15 @@ export default async function handler(req, res) {
     // Obtém a chave da API do ambiente (configurada no provedor serverless)
     const apiKey = process.env.CNJ_API_KEY;
     if (!apiKey) {
-      return res.status(500).json({ message: 'Chave de API não configurada' });
+      console.error('Chave de API do CNJ não configurada');
+      return res.status(500).json({ 
+        message: 'A variável de ambiente CNJ_API_KEY não está configurada',
+        details: 'Adicione a variável de ambiente CNJ_API_KEY nas configurações do projeto'
+      });
     }
 
+    console.log(`Fazendo requisição para tribunal: ${tribunal}`);
+    
     // URL da API do CNJ
     const url = `https://api-publica.datajud.cnj.jus.br/${tribunal}/_search`;
 
