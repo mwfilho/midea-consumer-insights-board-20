@@ -9,6 +9,7 @@ import PainelCivel from '@/components/juridico/PainelCivel';
 import PainelTrabalhista from '@/components/juridico/PainelTrabalhista';
 import PainelTributario from '@/components/juridico/PainelTributario';
 import PainelContratos from '@/components/juridico/PainelContratos';
+import ConsultasProcessuais from '@/components/juridico/ConsultasProcessuais';
 
 const VisaoGeral = () => {
   const [filters, setFilters] = useState({
@@ -28,13 +29,14 @@ const VisaoGeral = () => {
       
       <div className="mt-6">
         <Tabs defaultValue="geral" className="w-full">
-          <TabsList className="grid grid-cols-6 mb-6">
+          <TabsList className="grid grid-cols-7 mb-6">
             <TabsTrigger value="geral">Geral</TabsTrigger>
             <TabsTrigger value="consumidor">Consumidor</TabsTrigger>
             <TabsTrigger value="civel">Cível</TabsTrigger>
             <TabsTrigger value="trabalhista">Trabalhista</TabsTrigger>
             <TabsTrigger value="tributario">Tributário</TabsTrigger>
             <TabsTrigger value="contratos">Contratos</TabsTrigger>
+            <TabsTrigger value="consultas">Consultas Processuais</TabsTrigger>
           </TabsList>
           
           <TabsContent value="geral" className="animate-fade-in">
@@ -59,6 +61,10 @@ const VisaoGeral = () => {
           
           <TabsContent value="contratos" className="animate-fade-in">
             <PainelContratos filters={filters} />
+          </TabsContent>
+          
+          <TabsContent value="consultas" className="animate-fade-in">
+            <ConsultasProcessuais />
           </TabsContent>
         </Tabs>
       </div>
