@@ -39,7 +39,8 @@ export default async function handler(req, res) {
       console.error('Chave de API do CNJ não configurada');
       return res.status(500).json({ 
         message: 'A variável de ambiente CNJ_API_KEY não está configurada',
-        details: 'Adicione a variável de ambiente CNJ_API_KEY nas configurações do projeto'
+        details: 'Adicione a variável de ambiente CNJ_API_KEY nas configurações do projeto Lovable',
+        configTip: 'Acesse "Configurações do Projeto" > "Variáveis de Ambiente" e adicione CNJ_API_KEY'
       });
     }
 

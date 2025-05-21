@@ -21,7 +21,18 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ erro }) => {
           {erro.includes("500") && "Ocorreu um erro interno no servidor. A chave de API pode estar configurada incorretamente ou expirada."}
           {erro.includes("401") && "Acesso não autorizado. A chave de API pode estar inválida ou expirada."}
           {erro.includes("403") && "Acesso proibido. Verifique as permissões da chave de API."}
-          {erro.includes("variável") && "A variável de ambiente CNJ_API_KEY não está configurada no servidor."}
+          {erro.includes("variável") && (
+            <>
+              <p>A variável de ambiente CNJ_API_KEY não está configurada no servidor.</p>
+              <p className="mt-1 font-semibold">Como configurar:</p>
+              <ol className="list-decimal ml-5 mt-1">
+                <li>Acesse as Configurações do seu projeto Lovable</li>
+                <li>Vá para a seção "Variáveis de Ambiente"</li>
+                <li>Adicione a variável CNJ_API_KEY com o valor: <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">cDZHYzlZa0JadVREZDJCendQbXY6SkJlTzNjLV9TRENyQk1RdnFKZGRQdw==</code></li>
+                <li>Salve as alterações e reimplante o projeto</li>
+              </ol>
+            </>
+          )}
         </div>
       </AlertDescription>
     </Alert>
