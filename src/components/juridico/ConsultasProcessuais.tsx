@@ -85,7 +85,7 @@ const ConsultasProcessuais = () => {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${API_KEY}`,
+          'Authorization': `APIKey ${API_KEY}`, // Alterado de Bearer para APIKey conforme exemplo
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
