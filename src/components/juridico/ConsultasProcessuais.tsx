@@ -68,13 +68,18 @@ const ConsultasProcessuais = () => {
         query: query
       };
 
+      // Corrigindo a URL da API - usando o tribuna ID diretamente na URL
       const url = `https://api-publica.datajud.cnj.jus.br/${tribunal}/_search`;
+      
+      console.log("Buscando processo no endpoint:", url);
+      console.log("Payload:", JSON.stringify(payload));
       
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Authorization': `APIKey ${API_KEY}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(payload)
       });
