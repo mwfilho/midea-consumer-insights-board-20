@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Search, Loader2 } from 'lucide-react';
+import { Search, Loader2, AlertTriangle } from 'lucide-react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,11 +10,15 @@ import { TRIBUNAIS } from '@/data/tribunaisData';
 import { Processo, CNJApiResponse } from '@/types/cnj';
 import ProcessoDetail from './ProcessoDetail';
 import ProcessosList from './ProcessosList';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 // A chave de API do CNJ seria armazenada como variável de ambiente em produção
 // Em um ambiente de produção real, isso deveria ser gerenciado no backend ou
 // através de variáveis de ambiente seguras
 const API_KEY = "cDZHYzlZa0JadVREZDJCendQbXY6SkJlTzNjLV9TRENyQk1RdnFKZGRQdw==";
+
+// URL base da API
+const API_BASE_URL = "https://api-publica.datajud.cnj.jus.br";
 
 const ConsultasProcessuais = () => {
   const [numeroProcesso, setNumeroProcesso] = useState('');
@@ -22,6 +26,7 @@ const ConsultasProcessuais = () => {
   const [tribunal, setTribunal] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [resultados, setResultados] = useState<Processo[]>([]);
+  const [erro, setErro] = useState<string | null>(null);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +51,7 @@ const ConsultasProcessuais = () => {
 
     setIsLoading(true);
     setResultados([]);
+    setErro(null);
 
     try {
       const numeroLimpo = numeroProcesso.replace(/\D/g, '');
@@ -68,16 +74,18 @@ const ConsultasProcessuais = () => {
         query: query
       };
 
-      // Corrigindo a URL da API - usando o tribuna ID diretamente na URL
-      const url = `https://api-publica.datajud.cnj.jus.br/${tribunal}/_search`;
+      // Construção correta da URL da API
+      const url = `${API_BASE_URL}/${tribunal}/_search`;
       
       console.log("Buscando processo no endpoint:", url);
       console.log("Payload:", JSON.stringify(payload));
       
+      // Em um ambiente de produção, esta requisição deveria ser feita através de um backend
+      // para evitar problemas de CORS e proteger a chave de API
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Authorization': `APIKey ${API_KEY}`,
+          'Authorization': `Bearer ${API_KEY}`,
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
@@ -85,7 +93,8 @@ const ConsultasProcessuais = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Erro na requisição: ${response.status}`);
+        const statusText = await response.text();
+        throw new Error(`Erro na requisição: ${response.status} - ${statusText}`);
       }
 
       const data = await response.json() as CNJApiResponse;
@@ -123,6 +132,7 @@ const ConsultasProcessuais = () => {
 
     } catch (error) {
       console.error('Erro ao buscar processos:', error);
+      setErro(error instanceof Error ? error.message : "Ocorreu um erro ao consultar a API do CNJ.");
       toast({
         title: "Erro na consulta",
         description: error instanceof Error ? error.message : "Ocorreu um erro ao consultar a API do CNJ.",
@@ -199,6 +209,20 @@ const ConsultasProcessuais = () => {
           </form>
         </CardContent>
       </Card>
+
+      {erro && (
+        <Alert variant="destructive" className="bg-red-50 border-red-300">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>Erro na consulta</AlertTitle>
+          <AlertDescription>
+            {erro}
+            <div className="mt-2 text-sm">
+              Nota: A API pública do CNJ pode ter restrições de CORS que impedem o acesso direto via navegador. 
+              Em um ambiente de produção, essas chamadas devem ser feitas através de um servidor backend.
+            </div>
+          </AlertDescription>
+        </Alert>
+      )}
 
       {resultados.length > 0 && (
         <div className="space-y-4">
