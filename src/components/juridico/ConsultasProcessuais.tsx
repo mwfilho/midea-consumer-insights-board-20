@@ -1,16 +1,11 @@
 
 import React, { useState } from 'react';
-import { Search, Loader2, AlertTriangle } from 'lucide-react';
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { TRIBUNAIS } from '@/data/tribunaisData';
+import { Card, CardContent } from "@/components/ui/card";
 import { Processo, CNJApiResponse } from '@/types/cnj';
-import ProcessoDetail from './ProcessoDetail';
-import ProcessosList from './ProcessosList';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import SearchForm from './SearchForm';
+import ErrorDisplay from './ErrorDisplay';
+import ResultsDisplay from './ResultsDisplay';
 
 // URL base para o proxy API (em produção, substituir pela URL real do proxy)
 const API_PROXY_URL = "https://api-proxy.example.com/cnj-proxy";
@@ -172,96 +167,21 @@ const ConsultasProcessuais = () => {
     <div className="space-y-6">
       <Card>
         <CardContent className="pt-6">
-          <form onSubmit={handleSearch} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label htmlFor="numeroProcesso" className="text-sm font-medium">
-                  Número do Processo
-                </label>
-                <Input
-                  id="numeroProcesso"
-                  placeholder="Ex: 00012345620215010000"
-                  value={numeroProcesso}
-                  onChange={(e) => setNumeroProcesso(e.target.value)}
-                  disabled={isLoading}
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="documento" className="text-sm font-medium">
-                  CPF/CNPJ
-                </label>
-                <Input
-                  id="documento"
-                  placeholder="Somente números"
-                  value={documento}
-                  onChange={(e) => setDocumento(e.target.value)}
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="tribunal" className="text-sm font-medium">
-                Tribunal
-              </label>
-              <Select value={tribunal} onValueChange={setTribunal} disabled={isLoading}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione um tribunal" />
-                </SelectTrigger>
-                <SelectContent>
-                  {TRIBUNAIS.map((trib, index) => (
-                    <SelectItem key={index} value={trib.alias}>
-                      {trib.nome}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <Button type="submit" className="w-full md:w-auto" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Buscando...
-                </>
-              ) : (
-                <>
-                  <Search className="mr-2 h-4 w-4" />
-                  Buscar
-                </>
-              )}
-            </Button>
-          </form>
+          <SearchForm
+            numeroProcesso={numeroProcesso}
+            documento={documento}
+            tribunal={tribunal}
+            isLoading={isLoading}
+            setNumeroProcesso={setNumeroProcesso}
+            setDocumento={setDocumento}
+            setTribunal={setTribunal}
+            handleSearch={handleSearch}
+          />
         </CardContent>
       </Card>
 
-      {erro && (
-        <Alert variant="destructive" className="bg-red-50 border-red-300">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>Erro na consulta</AlertTitle>
-          <AlertDescription>
-            {erro}
-            <div className="mt-2 text-sm">
-              Nota: A API pública do CNJ tem restrições de CORS que impedem o acesso direto via navegador. 
-              Em um ambiente de produção, essas chamadas devem ser feitas através de um servidor backend.
-            </div>
-          </AlertDescription>
-        </Alert>
-      )}
-
-      {resultados.length > 0 && (
-        <div className="space-y-4">
-          <h3 className="text-lg font-medium">
-            {resultados.length} Processo{resultados.length > 1 ? 's' : ''} Encontrado{resultados.length > 1 ? 's' : ''}
-          </h3>
-          
-          {resultados.length === 1 ? (
-            <ProcessoDetail processo={resultados[0]} />
-          ) : (
-            <ProcessosList processos={resultados} />
-          )}
-        </div>
-      )}
+      <ErrorDisplay erro={erro} />
+      <ResultsDisplay resultados={resultados} />
     </div>
   );
 };
