@@ -12,13 +12,8 @@ import ProcessoDetail from './ProcessoDetail';
 import ProcessosList from './ProcessosList';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-// A chave de API do CNJ seria armazenada como variável de ambiente em produção
-// Em um ambiente de produção real, isso deveria ser gerenciado no backend ou
-// através de variáveis de ambiente seguras
-const API_KEY = "cDZHYzlZa0JadVREZDJCendQbXY6SkJlTzNjLV9TRENyQk1RdnFKZGRQdw==";
-
-// URL base da API
-const API_BASE_URL = "https://api-publica.datajud.cnj.jus.br";
+// URL base para o proxy API (em produção, substituir pela URL real do proxy)
+const API_PROXY_URL = "https://api-proxy.example.com/cnj-proxy";
 
 const ConsultasProcessuais = () => {
   const [numeroProcesso, setNumeroProcesso] = useState('');
@@ -57,6 +52,30 @@ const ConsultasProcessuais = () => {
       const numeroLimpo = numeroProcesso.replace(/\D/g, '');
       const docLimpo = documento.replace(/\D/g, '');
       
+      // Enquanto não temos o proxy real implementado, continuaremos a chamar a API diretamente
+      // Em produção, substitua este bloco pelo código que chama o proxy
+      // Criamos o payload da busca
+      const payload = {
+        tribunal,
+        numeroProcesso: numeroLimpo || undefined,
+        documento: docLimpo || undefined,
+      };
+
+      console.log("Realizando consulta com os parâmetros:", payload);
+      
+      // Simulação de um proxy API
+      // Em um ambiente de produção, isto seria substituído por:
+      // const response = await fetch(API_PROXY_URL, {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(payload)
+      // });
+      
+      // NOTA: Como explicado, esta chamada direta continuará falhando devido ao CORS
+      // Estamos mantendo este código apenas para demonstração
+      // Um proxy serverless real seria necessário para resolver definitivamente o problema
+      
+      // Para efeitos de demonstração, manteremos a chamada direta à API
       let query: any = {};
       
       if (numeroLimpo) {
@@ -69,27 +88,26 @@ const ConsultasProcessuais = () => {
         };
       }
 
-      const payload = {
+      const apiPayload = {
         size: 100,
         query: query
       };
 
       // Construção correta da URL da API
-      const url = `${API_BASE_URL}/${tribunal}/_search`;
+      const url = `https://api-publica.datajud.cnj.jus.br/${tribunal}/_search`;
       
       console.log("Buscando processo no endpoint:", url);
-      console.log("Payload:", JSON.stringify(payload));
+      console.log("Payload:", JSON.stringify(apiPayload));
       
-      // Em um ambiente de produção, esta requisição deveria ser feita através de um backend
-      // para evitar problemas de CORS e proteger a chave de API
+      // Na implementação real, esta chamada seria substituída pela chamada ao proxy
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Authorization': `APIKey ${API_KEY}`, // Alterado de Bearer para APIKey conforme exemplo
+          'Authorization': `APIKey cDZHYzlZa0JadVREZDJCendQbXY6SkJlTzNjLV9TRENyQk1RdnFKZGRQdw==`, // Chave apenas para demonstração
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(apiPayload)
       });
 
       if (!response.ok) {
@@ -133,6 +151,13 @@ const ConsultasProcessuais = () => {
     } catch (error) {
       console.error('Erro ao buscar processos:', error);
       setErro(error instanceof Error ? error.message : "Ocorreu um erro ao consultar a API do CNJ.");
+      
+      // Adicionar informação sobre CORS para ajudar na depuração
+      if (error instanceof Error && error.message.includes("NetworkError") || error.message.includes("Failed to fetch") || error.message.includes("CORS")) {
+        setErro(`Erro de CORS ao acessar a API. É necessário implementar um proxy serverless para contornar esta limitação. 
+                Detalhes: ${error.message}`);
+      }
+      
       toast({
         title: "Erro na consulta",
         description: error instanceof Error ? error.message : "Ocorreu um erro ao consultar a API do CNJ.",
@@ -217,7 +242,7 @@ const ConsultasProcessuais = () => {
           <AlertDescription>
             {erro}
             <div className="mt-2 text-sm">
-              Nota: A API pública do CNJ pode ter restrições de CORS que impedem o acesso direto via navegador. 
+              Nota: A API pública do CNJ tem restrições de CORS que impedem o acesso direto via navegador. 
               Em um ambiente de produção, essas chamadas devem ser feitas através de um servidor backend.
             </div>
           </AlertDescription>
