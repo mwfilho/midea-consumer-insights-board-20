@@ -17,8 +17,8 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ erro }) => {
       <AlertDescription>
         {erro}
         <div className="mt-2 text-sm">
-          Nota: A API pública do CNJ tem restrições de CORS que impedem o acesso direto via navegador. 
-          Em um ambiente de produção, essas chamadas devem ser feitas através de um servidor backend.
+          {erro.includes("404") && "O endpoint do proxy API não pôde ser encontrado. Verifique se a função serverless está implantada corretamente."}
+          {erro.includes("500") && "Ocorreu um erro interno no servidor. A chave de API pode estar configurada incorretamente ou expirada."}
         </div>
       </AlertDescription>
     </Alert>

@@ -7,8 +7,8 @@ import SearchForm from './SearchForm';
 import ErrorDisplay from './ErrorDisplay';
 import ResultsDisplay from './ResultsDisplay';
 
-// URL base para o proxy API (em produção, substituir pela URL real do proxy)
-const API_PROXY_URL = "https://api-proxy.example.com/cnj-proxy";
+// URL base para o proxy API (substituir pela URL real após implantação)
+const API_PROXY_URL = "/api/cnj-proxy"; // Usando caminho relativo para o endpoint serverless
 
 const ConsultasProcessuais = () => {
   const [numeroProcesso, setNumeroProcesso] = useState('');
@@ -47,67 +47,26 @@ const ConsultasProcessuais = () => {
       const numeroLimpo = numeroProcesso.replace(/\D/g, '');
       const docLimpo = documento.replace(/\D/g, '');
       
-      // Enquanto não temos o proxy real implementado, continuaremos a chamar a API diretamente
-      // Em produção, substitua este bloco pelo código que chama o proxy
-      // Criamos o payload da busca
+      // Preparamos o payload para o proxy API
       const payload = {
         tribunal,
         numeroProcesso: numeroLimpo || undefined,
         documento: docLimpo || undefined,
       };
 
-      console.log("Realizando consulta com os parâmetros:", payload);
+      console.log("Enviando consulta para o proxy API:", payload);
       
-      // Simulação de um proxy API
-      // Em um ambiente de produção, isto seria substituído por:
-      // const response = await fetch(API_PROXY_URL, {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(payload)
-      // });
-      
-      // NOTA: Como explicado, esta chamada direta continuará falhando devido ao CORS
-      // Estamos mantendo este código apenas para demonstração
-      // Um proxy serverless real seria necessário para resolver definitivamente o problema
-      
-      // Para efeitos de demonstração, manteremos a chamada direta à API
-      let query: any = {};
-      
-      if (numeroLimpo) {
-        query = {
-          match: { numeroProcesso: numeroLimpo }
-        };
-      } else if (docLimpo) {
-        query = {
-          match: { "partes.numeroDocumento": docLimpo }
-        };
-      }
-
-      const apiPayload = {
-        size: 100,
-        query: query
-      };
-
-      // Construção correta da URL da API
-      const url = `https://api-publica.datajud.cnj.jus.br/${tribunal}/_search`;
-      
-      console.log("Buscando processo no endpoint:", url);
-      console.log("Payload:", JSON.stringify(apiPayload));
-      
-      // Na implementação real, esta chamada seria substituída pela chamada ao proxy
-      const response = await fetch(url, {
+      // Fazemos a chamada para o proxy API ao invés da API direta do CNJ
+      const response = await fetch(API_PROXY_URL, {
         method: 'POST',
-        headers: {
-          'Authorization': `APIKey cDZHYzlZa0JadVREZDJCendQbXY6SkJlTzNjLV9TRENyQk1RdnFKZGRQdw==`, // Chave apenas para demonstração
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(apiPayload)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
       });
 
       if (!response.ok) {
-        const statusText = await response.text();
-        throw new Error(`Erro na requisição: ${response.status} - ${statusText}`);
+        const errorText = await response.text();
+        console.error('Erro na resposta do proxy API:', response.status, errorText);
+        throw new Error(`Erro ${response.status}: ${errorText}`);
       }
 
       const data = await response.json() as CNJApiResponse;
@@ -119,6 +78,7 @@ const ConsultasProcessuais = () => {
           description: "Não foram encontrados processos com os critérios informados.",
           variant: "default"
         });
+        setResultados([]);
         return;
       }
 
@@ -145,17 +105,13 @@ const ConsultasProcessuais = () => {
 
     } catch (error) {
       console.error('Erro ao buscar processos:', error);
-      setErro(error instanceof Error ? error.message : "Ocorreu um erro ao consultar a API do CNJ.");
+      let mensagemErro = error instanceof Error ? error.message : "Ocorreu um erro ao consultar a API do CNJ.";
       
-      // Adicionar informação sobre CORS para ajudar na depuração
-      if (error instanceof Error && error.message.includes("NetworkError") || error.message.includes("Failed to fetch") || error.message.includes("CORS")) {
-        setErro(`Erro de CORS ao acessar a API. É necessário implementar um proxy serverless para contornar esta limitação. 
-                Detalhes: ${error.message}`);
-      }
+      setErro(mensagemErro);
       
       toast({
         title: "Erro na consulta",
-        description: error instanceof Error ? error.message : "Ocorreu um erro ao consultar a API do CNJ.",
+        description: mensagemErro,
         variant: "destructive"
       });
     } finally {
